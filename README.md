@@ -1,1 +1,1 @@
-Folder Laouting (Dashboard, Manajemen Produk, dan Penjualan)
+Folder Layouting (Dashboard, Manajemen Produk, dan Penjualan)
