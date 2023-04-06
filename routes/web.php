@@ -1,6 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\CategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,8 +22,23 @@ use Illuminate\Support\Facades\Route;
 
  Route::get('dashboard', function () {
     return view('dashboard',[
+      'title' => 'Halaman Dashboard',
       'menu'=>'dashboard',
       'sub_menu'=>'', 
-      'title'=>'Dashboard','
-      sub_title'=>'Halaman Admin']);
+      'judul'=>'Dashboard',
+      'sub_judul'=>'']
+    );
   })->name('dashboard');
+
+   Route::controller(ProductsController::class)->prefix('products')->group(function () {
+    Route::get('', 'index')->name('products');
+  });
+
+   Route::controller(CategoryController::class)->prefix('category')->group(function () {
+    Route::get('', 'index')->name('category');
+  });
+
+  Route::controller(TransactionController::class)->prefix('transaction')->group(function () {
+    Route::get('', 'index')->name('transaction');
+  });
+

@@ -19,7 +19,7 @@
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
             <div class="image">
               <img
-                src="{{ asset('img/admin.jpg') }}"
+                src="{{ asset('img/avatar5.png') }}"
                 class="img-circle elevation-2"
                 alt="User Image"
               />
@@ -41,7 +41,7 @@
                 with font-awesome or any other icon font library -->
             <li class="nav-item">
               <a
-                href=""
+                 href="{{ route('dashboard') }}"
                 class="nav-link {{ $menu == 'dashboard' ? 'active' : '' }}" 
               >
                 <i class="nav-icon fas fa-tachometer-alt"></i>
@@ -49,8 +49,18 @@
               </a>
             </li>
 
-            <li class="nav-item ">
-              <a href="#" class="nav-link ">
+            <li class="nav-item">
+              <a
+                 href="{{ route('transaction') }}"
+                class="nav-link {{ $menu == 'transaction' ? 'active' : '' }}" 
+              >
+                <i class="nav-icon fas fa-cash-register"></i>
+                <p>Penjualan</p>
+              </a>
+            </li>
+
+            <li class="nav-item {{ $menu == 'master' ? 'menu-open' : '' }} ">
+              <a href="#" class="nav-link {{ $menu == 'master' ? 'active' : '' }} ">
                 <i class="nav-icon fas fa-th"></i>
                 <p>
                   Master Data
@@ -60,22 +70,22 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a
-                    href=" "
-                    class="nav-link "
+                    href="{{ route('products') }}"
+                    class="nav-link {{ $sub_menu == 'produk' ? 'active' : '' }}"
                   >
                     <i
-                      class=""
+                      class="{{ $sub_menu == 'produk' ? 'far fa-dot-circle nav-icon' : 'far fa-circle nav-icon' }}"
                     ></i>
                     <p>Produk</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a
-                    href=""
-                    class="nav-link "
+                    href="{{ route('category') }}"
+                    class="nav-link {{ $sub_menu == 'kategori' ? 'active' : '' }}"
                   >
                     <i
-                      class=""
+                     class="{{ $sub_menu == 'kategori' ? 'far fa-dot-circle nav-icon' : 'far fa-circle nav-icon' }}"
                     ></i>
                     <p>Kategori</p>
                   </a>

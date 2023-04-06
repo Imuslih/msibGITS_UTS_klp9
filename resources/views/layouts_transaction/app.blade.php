@@ -7,7 +7,7 @@
 
     <title>{{ $title }}</title>
 
-      <!-- Font Awesome Icons -->
+    <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('/template/plugins/fontawesome-free/css/all.min.css') }}">
     <!-- IonIcons -->
     <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
@@ -42,57 +42,46 @@
   </head>
 </html>
 
-<body class="hold-transition sidebar-mini sidebar-collapse">
-  <div class="wrapper">
+<body class="hold-transition layout-top-nav">
+    <div class="wrapper">
 
     <!-- Nav -->
-    @include('layouts.navbar')
+    @include('layouts_transaction.navbar')
     <!-- End of Nav -->
 
-    <!-- Sidebar -->
-    @include('layouts.sidebar')
-    <!-- End of Sidebar -->
+     
+    @yield('contents_transaction')
+      
 
-    <div class="content-wrapper">
-      <!-- Content Header (Page header) -->
-      <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-            <div class="col-sm-6">
-              <h1 class="m-0 text-dark">{{ $title }}</h1>
-            </div>
-            <!-- /.col -->
-            <div class="col-sm-6">
-              <ol class="breadcrumb float-sm-right">
-                <li class="breadcrumb-item">
-                  <a href="#">{{ $judul }}</a>
-                </li>
-                <li class="breadcrumb-item active">{{ $sub_judul }}</li>
-              </ol>
-            </div>
-            <!-- /.col -->
-          </div>
-          <!-- /.row -->
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- /.content-header -->
-
-      <!-- Main content -->
-      <div class="content">
-        <div class="container-fluid">
-          <div class="row">
-           @yield('contents')
-          </div>
-        </div>
-        <!-- /.container-fluid -->
-      </div>
-      <!-- /.content -->
-    </div>
-
-    @include('layouts.footer')
+    @include('layouts_transaction.footer')
 
 
+<script>
+  window.onload = function() {
+    startTime();
+  }
+  function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m= checkTime(m);
+    s= checkTime(s);
+    document.getElementById('jam').innerHTML = h + ':' + m + ':' + s;
+    var t = setTimeout(function(){
+      startTime();
+    },500);
+   
+  }
+   
+  function checkTime(i) {
+    if (i<10) {
+      i = '0' + i;
+    }
+    return i;
+  }
+  
+</script>
 
 <!-- jQuery -->
 <script src="{{ asset('/template/plugins/jquery/jquery.min.js') }}"></script>
