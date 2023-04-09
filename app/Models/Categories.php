@@ -9,6 +9,7 @@ class Categories extends Model
 {
     use HasFactory;
 
+
     protected $fillable = [
         'name',
         'avatar'
@@ -16,5 +17,8 @@ class Categories extends Model
 
     public function products(){
         return $this->hasMany(Product::class);
+
+    // protected $fillable = ['name'];
+    // protected $guarded = ['id'];
     }
 }

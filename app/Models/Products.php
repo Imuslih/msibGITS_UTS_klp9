@@ -21,6 +21,7 @@ class Products extends Model
 
     public function categories(){
         return $this->belongsTo(Category::class);
+
     }
 
     public function detail_transaksi(){
