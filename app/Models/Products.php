@@ -20,7 +20,7 @@ class Products extends Model
     ];
 
     public function categories(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(Categories::class,'category_id');
     }
 
     public function detail_transaksi(){
