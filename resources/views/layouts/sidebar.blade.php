@@ -25,7 +25,7 @@
               />
             </div>
             <div class="info">
-              <a href="#" class="d-block">Admin</a>
+              <a href="#" class="d-block">{{ Auth::user()->name }}</a>
             </div>
         </div>
 
@@ -70,17 +70,6 @@
               <ul class="nav nav-treeview">
                 <li class="nav-item">
                   <a
-                    href="{{ route('products') }}"
-                    class="nav-link {{ $sub_menu == 'produk' ? 'active' : '' }}"
-                  >
-                    <i
-                      class="{{ $sub_menu == 'produk' ? 'far fa-dot-circle nav-icon' : 'far fa-circle nav-icon' }}"
-                    ></i>
-                    <p>Produk</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a
                     href="{{ route('category') }}"
                     class="nav-link {{ $sub_menu == 'kategori' ? 'active' : '' }}"
                   >
@@ -88,6 +77,18 @@
                      class="{{ $sub_menu == 'kategori' ? 'far fa-dot-circle nav-icon' : 'far fa-circle nav-icon' }}"
                     ></i>
                     <p>Kategori</p>
+                  </a>
+                </li>
+                
+                <li class="nav-item">
+                  <a
+                    href="{{ route('products') }}"
+                    class="nav-link {{ $sub_menu == 'produk' ? 'active' : '' }}"
+                  >
+                    <i
+                      class="{{ $sub_menu == 'produk' ? 'far fa-dot-circle nav-icon' : 'far fa-circle nav-icon' }}"
+                    ></i>
+                    <p>Produk</p>
                   </a>
                 </li>
               </ul>

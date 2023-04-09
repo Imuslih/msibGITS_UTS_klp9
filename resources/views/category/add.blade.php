@@ -23,7 +23,7 @@
                 @endif
                 <div class="form-group">
                     <label for="category_name">Nama Kategori</label>
-                    <input type="text" class="form-control" id="category_name" placeholder="Nama Kategori" name="category_name">
+                    <input type="text" class="form-control" id="category_name" placeholder="Nama Kategori" name="name">
                 </div>
             </div>
             <div class="card-footer">

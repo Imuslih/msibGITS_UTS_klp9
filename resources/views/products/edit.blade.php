@@ -46,7 +46,7 @@
             <div class="form-group">
                 <label>Gambar Yang Sudah Ada</label> 
                 <br>
-            <img src="{{asset('img_products/'.$products->image)}}" style="width:200px" alt="image"> 
+            <img src="{{ asset('storage/'.$products->image) }}" style="width:200px" alt="image"> 
             </div>
 
             <div class="form-group">

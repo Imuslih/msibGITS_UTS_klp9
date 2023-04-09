@@ -50,10 +50,8 @@ class AuthController extends Controller
 
         // login user here 
 
-
-        
         if(\Auth::attempt($request->only('email','password'))){
-            return redirect('dashboard');
+            return redirect('login');
         }
 
         return redirect('register')->withError('Error');

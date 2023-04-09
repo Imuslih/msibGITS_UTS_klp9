@@ -1,6 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\TransactionController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\DashboardController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,22 +18,21 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 // Route::get('/', function () {
 //     return view('welcome');
 // });
 
-
-
-   Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
-    Route::get('', 'index')->name('dashboard');
-  
+Route::middleware(['auth'])->group(function () {
+  Route::get('/', function () { return view('auth.login');});
+  Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
+        Route::get('', 'index')->name('dashboard');
   });
 
-   Route::controller(ProductsController::class)->prefix('products')->group(function () {
+  Route::controller(TransactionController::class)->prefix('transaction')->group(function () {
+    Route::get('', 'index')->name('transaction');
+  });
+
+  Route::controller(ProductsController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('products');
     Route::get('add','create')->name('products.add');
     Route::post('add','store')->name('products.store');
@@ -36,7 +41,7 @@ Route::get('/', function () {
     Route::get('destroy/{id}','destroy')->name('products.destroy');
   });
 
-   Route::controller(CategoryController::class)->prefix('category')->group(function () {
+  Route::controller(CategoryController::class)->prefix('category')->group(function () {
     Route::get('', 'index')->name('category');
     Route::get('add','create')->name('category.add');
     Route::post('add','store')->name('category.store');
@@ -45,9 +50,7 @@ Route::get('/', function () {
     Route::get('destroy/{id}','destroy')->name('category.destroy');
   });
 
-  Route::controller(TransactionController::class)->prefix('transaction')->group(function () {
-    Route::get('', 'index')->name('transaction');
-  });
+});
 
   Route::get('login', [AuthController::class, 'index'])->name('login');
   Route::post('login', [AuthController::class, 'login'])->name('login');
@@ -55,6 +58,6 @@ Route::get('/', function () {
   Route::get('register', [AuthController::class, 'register_view'])->name('register');
   Route::post('register', [AuthController::class, 'register'])->name('register');
 
-  Route::get('dashboard', [AuthController::class, 'dashboard'])->name('dashboard');
+  Route::get('home', [AuthController::class, 'home'])->name('home');
   Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
