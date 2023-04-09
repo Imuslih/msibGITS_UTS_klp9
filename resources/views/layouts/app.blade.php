@@ -90,6 +90,8 @@
       <!-- /.content -->
     </div>
 
+    
+
     @include('layouts.footer')
 
 
@@ -127,6 +129,28 @@
     });
   });
 </script>
+
+<script>
+  window.setTimeout(function(){
+    $('.alert').fadeTo(500,0).slideUp(500,function(){
+      $(this).remove();
+    });
+  },3000);
+</script>
+
+<script>
+
+  const swal = $('.swal').data('swal');
+  if (swal) {
+    Swal.fire({
+      title: "SUKSES !!",
+      text: swal,
+      icon: 'success'
+    })
+  }
+  
+</script>
+
 
 
 

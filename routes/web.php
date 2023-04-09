@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,22 +21,29 @@ use App\Http\Controllers\CategoryController;
 //     return view('welcome');
 // });
 
- Route::get('dashboard', function () {
-    return view('dashboard',[
-      'title' => 'Halaman Dashboard',
-      'menu'=>'dashboard',
-      'sub_menu'=>'', 
-      'judul'=>'Dashboard',
-      'sub_judul'=>'']
-    );
-  })->name('dashboard');
+
+
+   Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
+    Route::get('', 'index')->name('dashboard');
+  
+  });
 
    Route::controller(ProductsController::class)->prefix('products')->group(function () {
     Route::get('', 'index')->name('products');
+    Route::get('add','create')->name('products.add');
+    Route::post('add','store')->name('products.store');
+    Route::get('edit/{id}','edit')->name('products.edit');
+    Route::post('edit/{id}','update')->name('products.update');
+    Route::get('destroy/{id}','destroy')->name('products.destroy');
   });
 
    Route::controller(CategoryController::class)->prefix('category')->group(function () {
     Route::get('', 'index')->name('category');
+    Route::get('add','create')->name('category.add');
+    Route::post('add','store')->name('category.store');
+    Route::get('edit/{id}', 'edit')->name('category.edit');
+    Route::post('edit/{id}','update')->name('category.update');
+    Route::get('destroy/{id}','destroy')->name('category.destroy');
   });
 
   Route::controller(TransactionController::class)->prefix('transaction')->group(function () {
