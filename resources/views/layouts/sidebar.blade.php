@@ -94,6 +94,16 @@
               </ul>
             </li>
 
+             <li class="nav-item">
+              <a
+                href="{{ route('list_transaction') }}"
+                class="nav-link {{ $menu == 'list_transaction' ? 'active' : '' }}" 
+              >
+                <i class="nav-icon fas fa-shopping-cart"></i>
+                <p>Riwayat Transaksi</p>
+              </a>
+            </li>
+
         
           </ul>
         </nav>

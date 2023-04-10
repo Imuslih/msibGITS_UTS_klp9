@@ -42,7 +42,7 @@
             <td>{{$no++}}</td>
             <td>{{$item->product_code}}</td>
             <td>{{$item->name}}</td>
-            <td>{{$item->categories->name}}</td>
+            <td>{{$item->categories->category_name}}</td>
             <td>Rp. {{ number_format($item->purchase_price,0)}}</td>
             <td>Rp. {{ number_format($item->selling_price,0)}}</td>
             <td>{{number_format($item->stock,0)}}</td>

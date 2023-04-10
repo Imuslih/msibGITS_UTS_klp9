@@ -44,7 +44,7 @@
                   <label>Kasir</label>
                   <label
                     class="form-control form-control-lg text-center text-primary"
-                    >Admin</label
+                    >{{ Auth::user()->name }}</label
                   >
                 </div>
               </div>
@@ -67,109 +67,114 @@
       <div class="col-lg-12">
         <div class="card card-primary card-outline">
           <div class="card-body">
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="row">   
-                  <div class="col-3 input-group">
-                    <input
-                      name=""
-                      class="form-control"
-                      placeholder="Kode Produk"
-                      autocomplete="off"
-                      id= ""
+            <form action="{{ route('transaction.add_cart')}}" method="POST" enctype="multipart/form-data">
+              @csrf
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="row">   
+                    <div class="col-3 input-group">
+                      <input
+                        name="product_code"
+                        class="form-control"
+                        placeholder="Kode Produk"
+                        autocomplete="off"
+                        id= "product_code"
+                      />
+                      <span class="input-group-append">
+                        <a class="btn btn-primary btn-flat"  data-toggle="modal" data-target="#find-product">
+                          <i style="color: white" class="fas fa-search"></i>
+                        </a>
+                        <button type="reset" class="btn btn-danger btn-flat">
+                          <i class="fas fa-times"></i>
+                        </button>
+                      </span>
+                    </div>
+
+                    <div class="col-3">
+                      <input
+                        name="name"
+                        class="form-control"
+                        placeholder="Nama Produk"
+                        readonly
+                      />
+                    </div>
+
+                    <div class="col-1">
+                      <input
+                        name="category_name"
+                        class="form-control"
+                        placeholder="Kategori"
+                        readonly
+                      />
+                    </div>
+
+                    <div class="col-1">
+                      <input
+                        name="selling_price"
+                        class="form-control"
+                        placeholder="Harga"
+                        readonly
+                      />
+                    </div>
+
+                      <input
+                      name="purchase_price"
+                      type="hidden"
                     />
-                    <span class="input-group-append">
-                      <a class="btn btn-primary btn-flat"  data-toggle="modal" data-target="#">
-                        <i style="color: white" class="fas fa-search"></i>
+                  
+
+
+                    <div class="col-1">
+                      <input
+                        type="number"
+                        min="1"
+                        value="1"
+                        name="qty"
+                        class="form-control text-center"
+                        placeholder="QTY"
+                        id="qty"
+                      />
+                    </div>
+
+                  
+                    <div class="col-3">
+                      <a href="{{ route('transaction.add_cart') }}"  class="btn btn-primary">
+                        <i class="fas fa-cart-plus" ></i> Add
+                      </a >
+                      <a href="" class="btn btn-warning">
+                        <i class="fas fa-sync"></i> Reset
                       </a>
-                      <button type="reset" class="btn btn-danger btn-flat">
-                        <i class="fas fa-times"></i>
-                      </button>
-                    </span>
-                  </div>
-
-                  <div class="col-3">
-                    <input
-                      name=""
-                      class="form-control"
-                      placeholder="Nama Produk"
-                      readonly
-                    />
-                  </div>
-
-                  <div class="col-1">
-                    <input
-                      name=""
-                      class="form-control"
-                      placeholder="Kategori"
-                      readonly
-                    />
-                  </div>
-
-                  <div class="col-1">
-                    <input
-                      name=""
-                      class="form-control"
-                      placeholder="Harga"
-                      readonly
-                    />
-                  </div>
-
-
-                  <div class="col-1">
-                    <input
-                      type="number"
-                      min="1"
-                      value="1"
-                      name=""
-                      class="form-control text-center"
-                      placeholder="QTY"
-                      id=""
-                    />
-                  </div>
-
-                  <input
-                    name=""
-                    type="hidden"
-                  />
-                
-                  <div class="col-3">
-                    <button type="submit" class="btn btn-primary">
-                      <i class="fas fa-cart-plus" ></i> Add
-                    </button>
-                    <a href="" class="btn btn-warning">
-                      <i class="fas fa-sync"></i> Reset
-                    </a>
-                    <a style="color:white" data-toggle="modal" onclick=""  class="btn btn-success">
-                      <i  class="fas fa-cash-register"></i> Pembayaran
-                    </a>
+                      <a style="color:white" data-toggle="modal" onclick=""  class="btn btn-success">
+                        <i  class="fas fa-cash-register"></i> Pembayaran
+                      </a>
+                    </div>
                   </div>
                 </div>
+                
               </div>
-              
-            </div>
-            <br>
-            <div class="row">
-              <div class="col-lg-12">
-                <table class="table table-bordered">
-                  <thead>
-                    <tr class="text-center">
-                      <th>Kode/Barcode</th>
-                      <th>Nama Produk</th>
-                      <th>Kategori</th>
-                      <th>Harga Jual</th>
-                      <th width="100px">QTY</th>
-                      <th>Total Harga</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                     
-                    </tr>
-                  </tbody>
-                </table>
+              <br>
+              <div class="row">
+                <div class="col-lg-12">
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr class="text-center">
+                        <th>Kode/Barcode</th>
+                        <th>Nama Produk</th>
+                        <th>Kategori</th>
+                        <th>Harga Jual</th>
+                        <th width="100px">QTY</th>
+                        <th>Total Harga</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                      
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
@@ -190,6 +195,148 @@
   </div>
 </div>
 
+<!-- Modal Pencarian Produk -->
+<div class="modal fade " id="find-product">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Pencarian Data Produk</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <table id="example1" class="table table-bordered table-striped text-sm text-center">
+          <thead>
+            <tr >
+              <th width="50px">No</th>
+              <th>Kode Produk</th>
+              <th>Nama Produk</th>
+              <th>Kategori</th>
+              <th>Harga Beli</th>
+              <th>Harga Jual</th>
+              <th>Stok</th>
+              <th>Gambar</th>
+              <th width="100px">Aksi</th>
+            </tr>
+          </thead>
+          <tbody>
+              @php
+                $no=1;
+              @endphp
+            @foreach ($products  as $item)
+            <tr>
+              <td>{{$no++}}</td>
+              <td>{{$item->product_code}}</td>
+              <td>{{$item->name}}</td>
+              <td>{{$item->category_name}}</td>
+              <td>Rp. {{ number_format($item->purchase_price,0)}}</td>
+              <td>Rp. {{ number_format($item->selling_price,0)}}</td>
+              <td>{{number_format($item->stock,0)}}</td>
+              <td> <img src="{{ asset('storage/'.$item->image) }}" style="width:100px" alt="image"> </td>
+              <td style=" width:30px"><button onclick="PilihProduk('{{$item->product_code}}')" class="btn btn-success btn-xs">Piih</button></td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /Modal Pencarian Produk -->
+
+<script>
+   $(document).ready(function() {
+    $('#product_code').focus();
+
+    $('#product_code').keydown(function (e) {
+        let product_code = $('#product_code').val();
+        if (e.keyCode == 13) {
+          e.preventDefault();
+          if (product_code == '') {
+            Swal.fire({
+              title: "Maaf !!",
+              text: 'Kode Produk Kosong',
+              icon: 'error'
+            })
+          } else {
+            CekProduk();
+          }
+        }
+      });
+
+    });
+
+    
+  function PilihProduk(product_code) {
+    $('#product_code').val(product_code);
+    $('#find-product').modal('hide');
+    $('#product_code').focus();
+  }
+
+   function CekProduk() {
+    $.ajax({
+      type: "POST",
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      },
+      url: "/transaction/cek_produk",
+      data: {
+        product_code: $('#product_code').val(),
+      },
+      dataType: "JSON",
+      success: function(response) {
+        if (response.name == '') {
+          Swal.fire({
+            title: "Maaf !!",
+            text: 'Kode Produk Tidak Terdaftar',
+            icon: 'error'
+          })
+        }else{
+          $('[name="name"]').val(response.name);
+          $('[name="purchase_price"]').val(response.purchase_price);
+          $('[name="selling_price"]').val(response.selling_price);
+          $('[name="category_name"]').val(response.category_name);
+          $('#qty').focus();
+        }
+      }
+
+    });
+  }
+  
+</script>
+
+<script>
+  window.onload = function() {
+    startTime();
+  }
+  function startTime() {
+    var today = new Date();
+    var h = today.getHours();
+    var m = today.getMinutes();
+    var s = today.getSeconds();
+    m= checkTime(m);
+    s= checkTime(s);
+    document.getElementById('jam').innerHTML = h + ':' + m + ':' + s;
+    var t = setTimeout(function(){
+      startTime();
+    },500);
+   
+  }
+   
+  function checkTime(i) {
+    if (i<10) {
+      i = '0' + i;
+    }
+    return i;
+  }
+  
+</script>
+
+   
   
 
 @endsection
+

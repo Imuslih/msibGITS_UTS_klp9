@@ -23,7 +23,7 @@
                 @endif
                 <div class="form-group">
                     <label for="category_name">Nama Kategori</label>
-                    <input type="text" class="form-control" id="category_name" placeholder="Nama Kategori" name="name" value="{{isset($category) ? $category->name : ''}}">
+                    <input type="text" class="form-control" id="category_name" placeholder="Nama Kategori" name="category_name" value="{{isset($category) ? $category->category_name : ''}}">
                 </div>
             </div>
             <div class="card-footer">

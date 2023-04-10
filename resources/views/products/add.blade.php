@@ -46,11 +46,11 @@
                <input type="file" class="form-control" id="image" name="image">
             </div>
             <div class="form-group">
-                <label>Kategori ID</label>
+                <label>Kategori</label>
                 <select class="form-control select2" style="width: 100%;" name="category_id">
                     <option selected="selected">Pilih Kategori Produk</option>
                     @foreach ($categories as $item)
-                    <option value="1">{{$item->name}}</option>
+                    <option value="{{$item->id}}">{{$item->category_name}}</option>
                     @endforeach
                 </select>
             </div>

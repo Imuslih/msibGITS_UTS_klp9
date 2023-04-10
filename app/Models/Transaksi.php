@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\DB;
 
 class Transaksi extends Model
 {
@@ -19,5 +20,21 @@ class Transaksi extends Model
 
     public function detailTransaksi(){
         return $this->hasMany(DetailTransaksi::class);
+    }
+
+    public function cek_produk($product_code)
+    {
+        return DB::table('products')
+             ->join('categories', 'categories.id','=','products.category_id')
+             ->where('product_code',$product_code)
+             ->get()
+             ->first();
+    }
+
+    public function allData()
+    {
+        return DB::table('products')
+             ->join('categories', 'categories.id','=','products.category_id')
+             ->get();
     }
 }

@@ -45,13 +45,13 @@ class CategoryController extends Controller
         ];
 
         $validated = $request->validate([
-            'name' => 'required|unique:categories'
+            'category_name' => 'required|unique:categories'
         ],$pesan);
 
 
 
         Categories::create([
-            'name'=>$validated['name']
+            'category_name'=>$validated['category_name']
         ]);
         return redirect()->route('category')->with('success','Data Kategori Berhasil Ditambahkan');
     }
@@ -72,12 +72,18 @@ class CategoryController extends Controller
 
     public function update(Request $request, $id)
     {
+
+        $pesan = [
+            'required' => 'Data Kategori Tidak Boleh Kosong !!',
+            'unique' => 'Data Kategori sudah ada'
+        ];
+
         $request->validate([
-            'name' => 'required|unique:categories'
-        ]);
+            'category_name' => 'required|unique:categories'
+        ],$pesan);
 
         Categories::find($id)->update([
-            'name'=>$request->name
+            'category_name'=>$request->category_name
         ]);
         return redirect()->route('category')->with('success','Data Kategori Berhasil Diubah');
     }

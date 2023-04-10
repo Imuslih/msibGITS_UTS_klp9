@@ -59,7 +59,7 @@
                 <select class="form-control select2" style="width: 100%;" name="category_id" value="{{isset($products) ? $products->category_id : ''}}">
                     {{-- <option selected="selected" value="{{$categories->name}}"></option> --}}
                     @foreach ($categories as $item)
-                    <option value="{{$item->id}}"{{$products->category_id== $item->id ? 'Selected' : ''}}>{{$item->name}}</option>
+                    <option value="{{$item->id}}"{{$products->category_id== $item->id ? 'Selected' : ''}}>{{$item->category_name}}</option>
                     @endforeach
                 </select>
                 </div>

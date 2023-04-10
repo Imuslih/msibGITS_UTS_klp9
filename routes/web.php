@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ListTransactionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -30,6 +31,20 @@ Route::middleware(['auth'])->group(function () {
 
   Route::controller(TransactionController::class)->prefix('transaction')->group(function () {
     Route::get('', 'index')->name('transaction');
+    Route::get('cek_produk', 'CekProduk')->name('cek_produk');
+    Route::post('cek_produk', 'CekProduk')->name('cek_produk');
+    Route::post('add_cart', 'AddCart')->name('transaction.add_cart');
+
+  });
+
+
+  Route::controller(CategoryController::class)->prefix('category')->group(function () {
+    Route::get('', 'index')->name('category');
+    Route::get('add','create')->name('category.add');
+    Route::post('add','store')->name('category.store');
+    Route::get('edit/{id}', 'edit')->name('category.edit');
+    Route::post('edit/{id}','update')->name('category.update');
+    Route::get('destroy/{id}','destroy')->name('category.destroy');
   });
 
   Route::controller(ProductsController::class)->prefix('products')->group(function () {
@@ -41,14 +56,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('destroy/{id}','destroy')->name('products.destroy');
   });
 
-  Route::controller(CategoryController::class)->prefix('category')->group(function () {
-    Route::get('', 'index')->name('category');
-    Route::get('add','create')->name('category.add');
-    Route::post('add','store')->name('category.store');
-    Route::get('edit/{id}', 'edit')->name('category.edit');
-    Route::post('edit/{id}','update')->name('category.update');
-    Route::get('destroy/{id}','destroy')->name('category.destroy');
-  });
+   Route::controller(ListTransactionController::class)->prefix('list_transaction')->group(function () {
+      Route::get('', 'index')->name('list_transaction');
+    });
 
 });
 
