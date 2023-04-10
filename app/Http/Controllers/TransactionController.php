@@ -41,6 +41,7 @@ class TransactionController extends Controller
       ];
     }else {
        $data = [
+        'id' => $product->id,
         'name' => $product->name,
         'purchase_price' => $product->purchase_price,
         'selling_price' => $product->selling_price,
@@ -52,6 +53,18 @@ class TransactionController extends Controller
        ];
     }
     	echo json_encode($data);
+  }
+
+  public function add_cart(Request $request){
+    $data = [
+        'id' => $request->id,
+        'name' => $request->name,
+        'purchase_price' => $request->purchase_price,
+        'selling_price' => $request->selling_price,
+        'category_name' => $request->category_name,
+    ];
+
+    dd($data);
   }
  
    

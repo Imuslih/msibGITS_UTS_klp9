@@ -98,7 +98,18 @@
                         readonly
                       />
                     </div>
+                    
+                    <div class="col-1">
+                      <input
+                        name="id"
+                        class="form-control"
+                        placeholder="ID"
+                        readonly
+                      />
+                    </div>
 
+                     
+                   
                     <div class="col-1">
                       <input
                         name="category_name"
@@ -138,9 +149,9 @@
 
                   
                     <div class="col-3">
-                      <a href="{{ route('transaction.add_cart') }}"  class="btn btn-primary">
+                      <button type="submit" class="btn btn-primary">
                         <i class="fas fa-cart-plus" ></i> Add
-                      </a >
+                      </button >
                       <a href="" class="btn btn-warning">
                         <i class="fas fa-sync"></i> Reset
                       </a>
@@ -296,6 +307,7 @@
             icon: 'error'
           })
         }else{
+          $('[name="id"]').val(response.id);
           $('[name="name"]').val(response.name);
           $('[name="purchase_price"]').val(response.purchase_price);
           $('[name="selling_price"]').val(response.selling_price);

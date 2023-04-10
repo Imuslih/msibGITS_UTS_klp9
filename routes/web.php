@@ -33,7 +33,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('', 'index')->name('transaction');
     Route::get('cek_produk', 'CekProduk')->name('cek_produk');
     Route::post('cek_produk', 'CekProduk')->name('cek_produk');
-    Route::post('add_cart', 'AddCart')->name('transaction.add_cart');
+    Route::post('add_cart', 'add_cart')->name('transaction.add_cart');
 
   });
 
