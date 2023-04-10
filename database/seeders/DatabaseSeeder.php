@@ -25,11 +25,11 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Categories::create([
-            'name' => 'Makanan'
+            'category_name' => 'Makanan'
         ]);
 
         Categories::create([
-            'name' => 'Minuman'
+            'category_name' => 'Minuman'
         ]);
 
         Products::create([
