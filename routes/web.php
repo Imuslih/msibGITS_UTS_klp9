@@ -34,7 +34,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('cek_produk', 'CekProduk')->name('cek_produk');
     Route::post('cek_produk', 'CekProduk')->name('cek_produk');
     Route::post('add_cart', 'add_cart')->name('transaction.add_cart');
-
+    Route::get('index2', 'index2')->name('index_transaction');
+    Route::get('cart', 'cart');
+    Route::get('add/{id}', 'add')->where('id','[0-9]+');
+    Route::get('hapus/{id}', 'hapus')->where('id','[0-9]+');
   });
 
 
