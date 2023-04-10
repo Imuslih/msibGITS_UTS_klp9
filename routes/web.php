@@ -24,7 +24,7 @@ use App\Http\Controllers\ListTransactionController;
 // });
 
 Route::middleware(['auth'])->group(function () {
-  Route::get('/', function () { return view('auth.login');});
+  Route::get('/', [DashboardController::class, 'index'])->name('index');
   Route::controller(DashboardController::class)->prefix('dashboard')->group(function () {
         Route::get('', 'index')->name('dashboard');
   });

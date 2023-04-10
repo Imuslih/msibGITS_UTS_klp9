@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name'  => 'testing',
             'email' => 'testing1@gmail.com',
-            'password' => 12345
+            'password'=> \Hash::make('12345')
         ]);
 
         Categories::create([
