@@ -29,15 +29,15 @@ class TransactionController extends Controller
 
   public function CekProduk(Request $request)
   {
-    $product_code = $request->input('product_code');
-    // $product_code = 'ads';
-    $product =$this->Transaksi->cek_produk($product_code);
+    $name = $request->input('name');
+    // $name = 'Kopi Kapal Api';
+    $product =$this->Transaksi->cek_produk($name);
     if ($product==null) {
       $data = [
         'name' => '',
         'purchase_price' => '',
         'selling_price' => '',
-        'category_name' => '',
+        'category_id' => '',
       ];
     }else {
        $data = [

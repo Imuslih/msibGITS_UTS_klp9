@@ -22,11 +22,11 @@ class Transaksi extends Model
         return $this->hasMany(DetailTransaksi::class);
     }
 
-    public function cek_produk($product_code)
+    public function cek_produk($name)
     {
         return DB::table('products')
              ->join('categories', 'categories.id','=','products.category_id')
-             ->where('product_code',$product_code)
+             ->where('name',$name)
              ->get()
              ->first();
     }

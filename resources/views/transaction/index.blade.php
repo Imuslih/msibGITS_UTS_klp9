@@ -74,11 +74,11 @@
                   <div class="row">   
                     <div class="col-3 input-group">
                       <input
-                        name="product_code"
+                        name="name"
                         class="form-control"
-                        placeholder="Kode Produk"
+                        placeholder="Nama Produk"
                         autocomplete="off"
-                        id= "product_code"
+                        id= "name"
                       />
                       <span class="input-group-append">
                         <a class="btn btn-primary btn-flat"  data-toggle="modal" data-target="#find-product">
@@ -234,7 +234,7 @@
               <td>Rp. {{ number_format($item->selling_price,0)}}</td>
               <td>{{number_format($item->stock,0)}}</td>
               <td> <img src="{{ asset('storage/'.$item->image) }}" style="width:100px" alt="image"> </td>
-              <td style=" width:30px"><button onclick="PilihProduk('{{$item->product_code}}')" class="btn btn-success btn-xs">Piih</button></td>
+              <td style=" width:30px"><button onclick="PilihProduk('{{$item->name}}')" class="btn btn-success btn-xs">Piih</button></td>
             </tr>
             @endforeach
           </tbody>
@@ -249,13 +249,13 @@
 
 <script>
    $(document).ready(function() {
-    $('#product_code').focus();
+    $('#name').focus();
 
-    $('#product_code').keydown(function (e) {
-        let product_code = $('#product_code').val();
+    $('#name').keydown(function (e) {
+        let name = $('#name').val();
         if (e.keyCode == 13) {
           e.preventDefault();
-          if (product_code == '') {
+          if (name == '') {
             Swal.fire({
               title: "Maaf !!",
               text: 'Kode Produk Kosong',
@@ -270,10 +270,11 @@
     });
 
     
-  function PilihProduk(product_code) {
-    $('#product_code').val(product_code);
+  function PilihProduk(name) {
+    $('#name').val(name);
     $('#find-product').modal('hide');
-    $('#product_code').focus();
+     CekProduk();
+   
   }
 
    function CekProduk() {
@@ -284,14 +285,14 @@
       },
       url: "/transaction/cek_produk",
       data: {
-        product_code: $('#product_code').val(),
+        name: $('#name').val(),
       },
       dataType: "JSON",
       success: function(response) {
         if (response.name == '') {
           Swal.fire({
             title: "Maaf !!",
-            text: 'Kode Produk Tidak Terdaftar',
+            text: 'Nama Produk Tidak Terdaftar',
             icon: 'error'
           })
         }else{
