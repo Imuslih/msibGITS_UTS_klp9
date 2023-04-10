@@ -10,12 +10,14 @@ class Transaksi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'detailTransaksi_id'.
+        'user_id',
+        'costumer_name',
+        'costumer_phone',
         'invoice',
         'total_price'
     ];
 
     public function detailTransaksi(){
-        return $this->belongsTo(DetailTransaksi::class);
+        return $this->hasMany(DetailTransaksi::class);
     }
 }

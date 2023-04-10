@@ -15,8 +15,10 @@ return new class extends Migration
     {
         Schema::create('transaksis', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('detailTransaksi_id');
-            $table->foreign('detailTransaksi_id')->references('id')->on('detail_transaksis');
+            $table->foreignId('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->string('costumer_name');
+            $table->string('costumer_phone');
             $table->string('invoice');
             $table->unsignedInteger('total_price')->default(0);
             $table->timestamps();

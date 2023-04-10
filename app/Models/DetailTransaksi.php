@@ -11,6 +11,7 @@ class DetailTransaksi extends Model
 
     protected $fillable = [
         'invoice',
+        'transaksi_id',
         'product_id',
         'qty',
         'price'
@@ -20,7 +21,8 @@ class DetailTransaksi extends Model
         return $this->belongsTo(Products::class);
     }
 
-    public function transaksi(){
-        return $this->hasMany(transaksi::class);
+    public function transaksis(){
+        return $this->belongsTo(Transaksi::class);
     }
+
 }
