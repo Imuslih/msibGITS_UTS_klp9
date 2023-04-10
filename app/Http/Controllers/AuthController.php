@@ -9,7 +9,10 @@ class AuthController extends Controller
 {
     public  function index()
     {
-        return view('auth.login');
+        $data = array(
+            'title' => 'Halaman Login'
+        );
+        return view('auth.login',$data);
     }
 
     public function login(Request $request){
@@ -29,8 +32,11 @@ class AuthController extends Controller
     }
 
     public function register_view()
-    {
-        return view('auth.register');
+    { 
+        $data = array(
+            'title' => 'Halaman Registrasi'
+        );
+        return view('auth.register',$data);
     }
 
     public function register(Request $request){
