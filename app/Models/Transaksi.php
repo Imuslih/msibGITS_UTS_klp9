@@ -56,6 +56,13 @@ class Transaksi extends Model
              ->get();
     }
 
+    public function allData2()
+    {
+        return DB::table('products')
+             ->join('categories', 'categories.id','=','products.category_id')
+             ->get();
+    }
+
     // public function inVoice()
     // {
     //     $kode_transaksi = "gits-";

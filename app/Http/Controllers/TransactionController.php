@@ -111,7 +111,63 @@ class TransactionController extends Controller
     return redirect('transaction');
 
   }
- 
-   
 
+  // --------------------------------------------------
+
+  public function add($id){
+        $cart = session('cart');
+        $products = Products::find($id);
+        if (empty($cart)){
+            $cart[$id] = [
+                'nama_produk' => $products->name,
+                'harga_produk' => $products->selling_price,
+                'qty' => 1
+            ];
+        } else {
+            $jml=1;
+            foreach($cart as $item =>$val){
+                if($item==$id){
+                    $jml = $val['qty']+=1;
+                }
+            }
+            $cart[$id] = [
+                'nama_produk' => $products->name,
+                'harga_produk' => $products->selling_price,
+                'qty' => $jml
+            ];
+        }
+
+        session(['cart' => $cart]);
+
+        return redirect('transaction/index2');
+    }
+
+    public function cart(){
+        $cart = session('cart');
+        return view('cart')->with('cart', $cart);
+    }
+
+    public function hapus($id){
+        $cart = session('cart');
+        unset($cart[$id]);
+
+        session(['cart' => $cart]);
+        return redirect('transaction/index2');
+    }
+
+    public function index2()
+    {
+      $cart = session('cart');
+      // $title = 'Halaman Kasir';
+      $data['products'] = $this->Transaksi->allData2();
+
+      // dd($data);
+
+      if(empty($cart)){
+        return view('transaction/index2', $data);
+      } else {
+          return view('transaction/index2', $data, $cart)->with('cart', $cart);
+      }
+        
+    }
 }

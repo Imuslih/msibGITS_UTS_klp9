@@ -35,10 +35,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('cek_produk', 'CekProduk')->name('cek_produk');
     Route::get('add_cart', 'add_cart')->name('transaction.add_cart');
     Route::post('add_cart', 'add_cart')->name('transaction.add_cart');
+
     Route::get('reset_cart', 'reset_cart')->name('transaction.reset_cart');
     Route::get('remove_item/{rowId}', 'remove_item')->name('transaction.remove_item');
-
+    Route::get('index2', 'index2')->name('index_transaction');
+    Route::get('cart', 'cart');
+    Route::get('add/{id}', 'add')->where('id','[0-9]+');
+    Route::get('hapus/{id}', 'hapus')->where('id','[0-9]+');
   });
+  //cek
 
 
   Route::controller(CategoryController::class)->prefix('category')->group(function () {
