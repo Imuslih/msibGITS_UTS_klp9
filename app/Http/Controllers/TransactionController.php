@@ -28,13 +28,14 @@ class TransactionController extends Controller
     $data = array(
       'title' => 'Halaman Kasir',
       'products' => $this->Transaksi->allData(),
-      // 'invoice' => $this->Transaksi->inVoice(),
+      'invoice' => $this->Transaksi->inVoice(),
       'cart' => Cart::content(),
       'grand_total' => Cart::subtotal()
     );
     // dd($this->Transaksi->allData());
     return view('transaction.index',$data);
-    // dd($cart);
+    
+    // dd($this->Transaksi->inVoice());
   }
 
   public function CekProduk(Request $request)
