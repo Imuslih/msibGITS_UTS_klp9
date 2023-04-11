@@ -18,7 +18,7 @@
                   <label>No Faktur</label>
                   <label
                     class="form-control form-control-lg text-center text-danger"
-                    >030402</label
+                    >gits-001</label
                   >
                 </div>
               </div>
@@ -59,7 +59,7 @@
             <h5 class="card-title m-0"></h5>
           </div>
           <div class="card-body bg-black color-palette text-right">
-            <label class="display-4 text-green">Rp. 10,000</label>
+            <label class="display-4 text-green">Rp. {{ number_format($grand_total,0) }}</label>
           </div>
         </div>
       </div>
@@ -72,7 +72,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="row">   
-                    <div class="col-3 input-group">
+                    <div class="col-2 input-group">
                       <input
                         name="name"
                         class="form-control"
@@ -90,7 +90,7 @@
                       </span>
                     </div>
 
-                    <div class="col-3">
+                    <div class="col-2">
                       <input
                         name="name"
                         class="form-control"
@@ -98,12 +98,22 @@
                         readonly
                       />
                     </div>
+
+                     <div class="col-1">
+                      <input
+                        name="id_product"
+                        class="form-control"
+                        placeholder="id"
+                        readonly
+                      />
+                    </div>
+
                     
                     <div class="col-1">
                       <input
-                        name="id"
+                        name="product_code"
                         class="form-control"
-                        placeholder="ID"
+                        placeholder="Kode Produk"
                         readonly
                       />
                     </div>
@@ -152,10 +162,10 @@
                       <button type="submit" class="btn btn-primary">
                         <i class="fas fa-cart-plus" ></i> Add
                       </button >
-                      <a href="" class="btn btn-warning">
+                      <a href="{{ route('transaction.reset_cart') }}" class="btn btn-warning">
                         <i class="fas fa-sync"></i> Reset
                       </a>
-                      <a style="color:white" data-toggle="modal" onclick=""  class="btn btn-success">
+                      <a style="color:white"  data-toggle="modal" onclick=""  class="btn btn-success">
                         <i  class="fas fa-cash-register"></i> Pembayaran
                       </a>
                     </div>
@@ -166,21 +176,35 @@
               <br>
               <div class="row">
                 <div class="col-lg-12">
-                  <table class="table table-bordered">
+                  <table class="table m-0">
                     <thead>
                       <tr class="text-center">
-                        <th>Kode/Barcode</th>
+                        <th>Id Produk</th>
+                        <th>Kode Produk</th>
                         <th>Nama Produk</th>
                         <th>Kategori</th>
                         <th>Harga Jual</th>
                         <th width="100px">QTY</th>
                         <th>Total Harga</th>
+                        <th>Aksi</th>
                       </tr>
                     </thead>
                     <tbody>
+                      @foreach ( $cart as $item )
                       <tr>
-                      
+                        <td>{{ $item->id }}</td>
+                        <td>{{ $item->options->product_code }}</td>
+                        <td>{{ $item->name }}</td>
+                        <td>{{ $item->options->category_name }}</td>
+                        <td>Rp. {{ number_format($item->price,0) }}</td>
+                        <td>{{ $item->qty }}</td>
+                        <td>Rp. {{ number_format($item->subtotal ,0)}}</td>
+                        <td class="text-center" >
+                          <a href="{{ route('transaction.remove_item',$item->rowId) }}" class="btn btn-flat btn-danger btn-sm">  <i class="fa fa-times text-white"> </i> </a>
+                        </td>
                       </tr>
+                      @endforeach
+                     
                     </tbody>
                   </table>
                 </div>
@@ -196,7 +220,7 @@
               <h5 class="card-title m-0"></h5>
             </div>
             <div class="card-body bg-black color-palette text-center">
-              <h2 class="text-yellow" id="terbilang">SEPULUH RIBU RUPIAH</h2>
+              <h2 class="text-yellow" id="terbilang"></h2>
             </div>
         </div>
       </div>
@@ -220,7 +244,7 @@
         <table id="example1" class="table table-bordered table-striped text-sm text-center">
           <thead>
             <tr >
-              <th width="50px">No</th>
+              <th width="50px">Id Produk</th>
               <th>Kode Produk</th>
               <th>Nama Produk</th>
               <th>Kategori</th>
@@ -237,14 +261,14 @@
               @endphp
             @foreach ($products  as $item)
             <tr>
-              <td>{{$no++}}</td>
+              <td>{{$item->id_product}}</td>
               <td>{{$item->product_code}}</td>
               <td>{{$item->name}}</td>
               <td>{{$item->category_name}}</td>
               <td>Rp. {{ number_format($item->purchase_price,0)}}</td>
               <td>Rp. {{ number_format($item->selling_price,0)}}</td>
               <td>{{number_format($item->stock,0)}}</td>
-              <td> <img src="{{ asset('storage/'.$item->image) }}" style="width:100px" alt="image"> </td>
+               <td> <img src="{{ asset('storage/'.$item->image) }}" style="width:100px" alt="image"> </td>
               <td style=" width:30px"><button onclick="PilihProduk('{{$item->name}}')" class="btn btn-success btn-xs">Piih</button></td>
             </tr>
             @endforeach
@@ -261,6 +285,14 @@
 <script>
    $(document).ready(function() {
     $('#name').focus();
+
+    
+    @if ($grand_total==0)
+       document.getElementById('terbilang').innerHTML ='Nol Rupiah';
+    @else
+      document.getElementById('terbilang').innerHTML = terbilang(<?= $grand_total ?>) + ' Rupiah';
+    @endif
+
 
     $('#name').keydown(function (e) {
         let name = $('#name').val();
@@ -307,7 +339,8 @@
             icon: 'error'
           })
         }else{
-          $('[name="id"]').val(response.id);
+          $('[name="id_product"]').val(response.id_product);
+          $('[name="product_code"]').val(response.product_code);
           $('[name="name"]').val(response.name);
           $('[name="purchase_price"]').val(response.purchase_price);
           $('[name="selling_price"]').val(response.selling_price);

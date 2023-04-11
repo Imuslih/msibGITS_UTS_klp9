@@ -33,7 +33,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('', 'index')->name('transaction');
     Route::get('cek_produk', 'CekProduk')->name('cek_produk');
     Route::post('cek_produk', 'CekProduk')->name('cek_produk');
+    Route::get('add_cart', 'add_cart')->name('transaction.add_cart');
     Route::post('add_cart', 'add_cart')->name('transaction.add_cart');
+    Route::get('reset_cart', 'reset_cart')->name('transaction.reset_cart');
+    Route::get('remove_item/{rowId}', 'remove_item')->name('transaction.remove_item');
 
   });
 

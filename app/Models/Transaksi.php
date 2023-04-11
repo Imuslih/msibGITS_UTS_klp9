@@ -26,6 +26,15 @@ class Transaksi extends Model
     {
         return DB::table('products')
              ->join('categories', 'categories.id','=','products.category_id')
+            ->select(
+            'products.id as id_product',
+            'product_code',
+            'name',
+            'category_name',
+            'purchase_price',
+            'selling_price',
+            'stock',
+            'image',)
              ->where('name',$name)
              ->get()
              ->first();
@@ -35,6 +44,30 @@ class Transaksi extends Model
     {
         return DB::table('products')
              ->join('categories', 'categories.id','=','products.category_id')
+             ->select(
+                'products.id as id_product',
+                'product_code',
+                'name',
+                'category_name',
+                'purchase_price',
+                'selling_price',
+                'stock',
+                'image',)
              ->get();
     }
+
+    // public function inVoice()
+    // {
+    //     $kode_transaksi = "gits-";
+    //     $query = \DB::table('transaksis')
+    //             ->select(\DB::raw('max(RIGHT(invoice,4)) as no_urut'));
+    //     // $hasil = $query['no_urut'];
+    //      if ($query[0]['no_urut']>0) {
+    //         $kd = $query['no_urut'] + 1;
+    //     }else {
+    //         $kd = 1;
+    //     }
+    //     $invoice = $kode_transaksi.$kd;
+    //     return $invoice;
+    //     }
 }

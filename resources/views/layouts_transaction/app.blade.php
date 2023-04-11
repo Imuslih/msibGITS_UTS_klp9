@@ -38,6 +38,8 @@
     <script src="{{ asset('/template/plugins/sweetalert2/sweetalert2.min.js') }}"></script>
       <!-- Auto Numerik -->
     <script src="{{ asset('/autoNumeric/src/AutoNumeric.js') }}"></script>
+    <!-- Terbilang -->
+    <script src="{{ asset('/terbilang/terbilang.js') }}"></script>
     <script src="https://kit.fontawesome.com/570bdaf656.js" crossorigin="anonymous"></script>
     
   
