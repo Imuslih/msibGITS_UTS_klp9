@@ -18,7 +18,7 @@
                   <label>No Faktur</label>
                   <label
                     class="form-control form-control-lg text-center text-danger"
-                    >gits-001</label
+                    >{{ $invoice }}</label
                   >
                 </div>
               </div>
