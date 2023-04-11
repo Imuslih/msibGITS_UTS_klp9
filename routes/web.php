@@ -39,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('add/{id}', 'add')->where('id','[0-9]+');
     Route::get('hapus/{id}', 'hapus')->where('id','[0-9]+');
   });
+  //cek
 
 
   Route::controller(CategoryController::class)->prefix('category')->group(function () {
