@@ -79,6 +79,7 @@
                         placeholder="Nama Produk"
                         autocomplete="off"
                         id= "name"
+                        required
                       />
                       <span class="input-group-append">
                         <a class="btn btn-primary btn-flat"  data-toggle="modal" data-target="#find-product">
@@ -165,7 +166,7 @@
                       <a href="{{ route('transaction.reset_cart') }}" class="btn btn-warning">
                         <i class="fas fa-sync"></i> Reset
                       </a>
-                      <a style="color:white"  data-toggle="modal" onclick=""  class="btn btn-success">
+                      <a style="color:white"  data-toggle="modal" onclick="Pembayaran()" data-target="#pembayaran"  class="btn btn-success">
                         <i  class="fas fa-cash-register"></i> Pembayaran
                       </a>
                     </div>
@@ -282,43 +283,142 @@
 </div>
 <!-- /Modal Pencarian Produk -->
 
+<!-- Modal Pembayaran Produk -->
+<div class="modal fade " id="pembayaran">
+  <div class="modal-dialog ">
+    <div class="modal-content">
+      <div class="modal-header">
+        <label class="modal-title">Transaksi Pembayaran</label>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label>Nama Customer</label>
+            <div class="input-group mb-3">
+            <input  autocomplete="off" required id="customer_name" name="customer_name" class="form-control form-control-lg text-right"  placeholder="Nama Customer" required>
+          </div>
+        </div>
+
+          <div class="form-group">
+          <label>No Telp Customer</label>
+            <div class="input-group mb-3">
+            <input  autocomplete="off" required id="customer_phone" name="customer_phone" class="form-control form-control-lg text-right"  placeholder="No Telp. Customer" required>
+          </div>
+        </div>
+
+       <div class="form-group">
+          <label>Total Biaya</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"></i>Rp.</span>
+              </div>
+            <input id="grand_total" name="grand_total" value="{{ number_format($grand_total,0) }} " readonly  class="text-danger form-control form-control-lg text-right"  placeholder="Harga Beli" required>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Dibayar</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"></i>Rp.</span>
+              </div>
+            <input required id="dibayar" name="dibayar" value=""  class="form-control form-control-lg text-right text-primary" autocomplete="off">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Kembalian</label>
+            <div class="input-group mb-3">
+              <div class="input-group-prepend">
+                <span class="input-group-text"></i>Rp.</span>
+              </div>
+            <input id="kembalian" name="kembalian" value=""  class="form-control form-control-lg text-right text-success" readonly>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer justify-content-between">
+        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary btn-flat"><i class="fas fa-save"></i> Simpan Transaksi</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /Modal Pembayaran Produk -->
+
+
+
+
 <script>
-   $(document).ready(function() {
+  $(document).ready(function() {
+
     $('#name').focus();
 
-    
-    @if ($grand_total==0)
-       document.getElementById('terbilang').innerHTML ='Nol Rupiah';
-    @else
+    @if($grand_total==0) {
+      document.getElementById('terbilang').innerHTML ='Nol Rupiah';
+    } @else {
       document.getElementById('terbilang').innerHTML = terbilang(<?= $grand_total ?>) + ' Rupiah';
+    }
     @endif
 
 
     $('#name').keydown(function (e) {
-        let name = $('#name').val();
-        if (e.keyCode == 13) {
-          e.preventDefault();
-          if (name == '') {
-            Swal.fire({
-              title: "Maaf !!",
-              text: 'Kode Produk Kosong',
-              icon: 'error'
-            })
-          } else {
-            CekProduk();
-          }
+      let name = $('#name').val();
+      if (e.keyCode == 13) {
+        e.preventDefault();
+        if (name == '') {
+          Swal.fire({
+            title: "Maaf !!",
+            text: 'Kode Produk Kosong',
+            icon: 'error'
+          })
+        } else {
+          CekProduk();
         }
-      });
-
+      }
     });
+
+    // Hitung Kembalian
+    $('#dibayar').keyup(function e() {
+      HitungKembalian();
+    });
+
+  });
 
     
   function PilihProduk(name) {
     $('#name').val(name);
     $('#find-product').modal('hide');
      CekProduk();
-   
   }
+
+  function Pembayaran() {
+    $('#pembayaran').modal('show');
+  }
+
+   new AutoNumeric('#dibayar', {
+    digitGroupSeparator : ',',
+    decimalPlaces: 0,
+  });
+
+  function HitungKembalian() {
+    let grand_total =$('#grand_total').val().replace(/[^.\d]/g,'').toString();
+    let dibayar = $('#dibayar').val().replace(/[^.\d]/g,'').toString();
+
+    let kembalian = parseFloat(dibayar) - parseFloat(grand_total);
+    $('#kembalian').val(kembalian);
+
+    new AutoNumeric('#kembalian', {
+    digitGroupSeparator : ',',
+    decimalPlaces: 0,
+  });
+  }
+
+
 
    function CekProduk() {
     $.ajax({
