@@ -66,6 +66,7 @@ class Transaksi extends Model
         return DB::table('transaksis')
              ->join('users', 'users.id','=','transaksis.user_id')
              ->select(
+                'transaksis.id',
                 'name',
                 'customer_name',
                 'customer_phone',
@@ -74,6 +75,30 @@ class Transaksi extends Model
                 'payment',
                 'change',
                )
+             ->get();
+    }
+
+    public function alldetailTransaksis($id)
+    {
+        return DB::table('transaksis')
+             ->join('detail_transaksis', 'detail_transaksis.transaksi_id','=','transaksis.id')
+             ->join('products', 'detail_transaksis.product_id','=','products.id')
+             ->select(
+                'customer_name',
+                'customer_phone',
+                'invoice',
+                'total_price',
+                'payment',
+                'change',
+                'product_code',
+                'name',
+                'qty',
+                'price',
+                'payment',
+                'change',
+
+               )
+             -> where('transaksi_id', $id)
              ->get();
     }
 
@@ -87,7 +112,7 @@ class Transaksi extends Model
 
     public function inVoice()
     {
-         $no_urut = 0;
+        $no_urut = 0;
         $query = DB::table('transaksis')
             ->select('id')
             ->get();

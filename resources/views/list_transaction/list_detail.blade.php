@@ -7,7 +7,7 @@
 <div class="col-md-12">
   <div class="card">
     <div class="card-header">
-      <h3 class="card-title">Riwayat Transaksi</h3>
+      <h3 class="card-title">Detail Transaksi</h3>
     </div>
     <!-- /.card-header -->
     <div class="card-body">
@@ -15,10 +15,10 @@
         <thead>
             <tr >
                 <th>No</th>
-                <th>Kasir</th>
-                <th>Invoice</th>
                 <th>Nama Customer</th>
                 <th>No. Telp Customer</th>
+                <th>Nama Produk</th>
+                <th>Jumlah</th>
                 <th>Total Harga</th>
                 <th>Uang Pembayaran</th>
                 <th>Uang Kembalian</th>
@@ -29,19 +29,22 @@
           @php
             $no=1;
           @endphp
-            @foreach ($data_listtransaction as $item)
+            @foreach ($details as $item)
                 <tr class="">
                     <td>{{$no++}}</td>
-                    <td>{{$item->name}}</td>
-                    <td>{{$item->invoice}}</td>
                     <td>{{$item->customer_name}}</td>
                     <td>{{$item->customer_phone}}</td>
-                    <td>Rp. {{number_format($item->total_price,0)}}</td>
-                    <td>Rp. {{number_format($item->payment,0)}}</td>
-                    <td>Rp. {{number_format($item->change,0)}}</td>
-                    <td><a href="{{ route('list_detail',$item->id)}}">Detail</a></td>
+                    <td>{{$item->name}}</td>
+                    <td>{{$item->qty}}</td>
+                    <td>{{$item->price}}</td>
+                    <td>{{$item->payment}}</td>
+                    <td>{{$item->change}}</td>
                 </tr>
                 @endforeach
+                <tr>
+                    <td colspan="5"></td>
+                    <td>{{ $item->total_price }}</td>
+                </tr>
         </tbody>
         </table>
     </div>

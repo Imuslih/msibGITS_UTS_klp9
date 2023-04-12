@@ -10,6 +10,7 @@ use App\Models\Transaksi;
 use App\Models\DetailTransaksi;
 use Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
  
 class TransactionController extends Controller
@@ -116,10 +117,25 @@ class TransactionController extends Controller
     if ( $produk==0 ) {
      return redirect('transaction')->with('danger','Data Keranjang Kosong');
     } else {
-        if ($change<=0) {
+        if ($change<0) {
           return redirect('transaction')->with('danger','Data Tidak Benar');
         } else {
           $item = Cart::content();
+
+          $query = DB::table('transaksis')
+            ->select('id')
+            ->get();
+          
+          foreach($query as $no){
+              $no_urut = $no->id;
+          }
+          if($no_urut == null){
+              $no_urut = 1;
+          } else {
+              $no_urut = $no_urut+1;
+          }
+
+          // dd($no_urut);
 
           $data = [
             'invoice' => $invoice,
@@ -131,11 +147,10 @@ class TransactionController extends Controller
             'change' => $change,
           ];
           Transaksi::create($data);
-
           
           foreach ($item as $key => $value) {
             $data = [
-              'transaksi_id' => $transaksi_id++,
+              'transaksi_id' => $no_urut,
               'product_id' => $value->id,
               'qty' =>  $value->qty,
               'price' => $value->subtotal
@@ -143,13 +158,93 @@ class TransactionController extends Controller
             DetailTransaksi::create($data);
           }
 
+          $phone_no = '6283857959431';
+          $message = "Bukti Transaksi dari *Kopi Kita*
+          
+          Nama    : Imam
+          No WA   : 085741573739
+          Invoice : 123456
+          Tanggal : Rabu, 12 April 2023
+          
+          Produk :
+          - Kopi hitam  2x  @Rp. 5.000
+          - Mendoan     1x  @Rp. 10.000
+          *SubTotal   : Rp. 20.000*
+          Pembayaran  : Rp. 50.000 (Kembali Ro, 30.000)
+          
+          Terima kasih atas kunjungan anda
+          
+          _Salam hangat_ *Kopi Kita*";
 
           Cart::destroy();
+
+          // $url = "https://api.whatsapp.com/send/?phone='.$phone_no.'&text='.urlencode($message)";
+
+          // echo "<script>window.open('".$url."', '_blank')</script>";
           return redirect('transaction')->with('success','Transaksi Berhasil Disimpan');
       }
     }
   }
 
+  public function kirimWA(){
+    $phone_no = '6285741573739';
+    // $phone_no1 = '6283857959431';
+    // $phone_no2 = '6282227007422';
+    // $phone_no3 = '62895393355523';
+    // $phone_no4 = '6287882914957';
+    $message = "Bukti Transaksi dari *Kopi Kita*
+    
+    Nama    : Imam
+    No WA   : 085741573739
+    Invoice : 123456
+    Tanggal : Rabu, 12 April 2023
+    
+    Produk :
+    - Kopi hitam  2x  @Rp. 5.000
+    - Mendoan     1x  @Rp. 10.000
+    *SubTotal   : Rp. 20.000*
+    Pembayaran  : Rp. 50.000 (Kembali Ro, 30.000)
+    
+    Terima kasih atas kunjungan anda
+    
+    _Salam hangat_ *Kopi Kita*";
+
+    // $this->kirimpesan($phone_no1, $message);
+    // $this->kirimpesan($phone_no2, $message);
+    // $this->kirimpesan($phone_no3, $message);
+    // $this->kirimpesan($phone_no4, $message);
+
+    // return view('dashboard');
+
+    return redirect()->to('https://api.whatsapp.com/send/?phone='.$phone_no.'&text='.urlencode($message));
+  }
+
+  function kirimpesan( $phone_no, $message){
+  
+    //$message = "Bismillah";
+    //$phone_no = "085647878076";
+
+    $message = preg_replace( "/(\n)/", "<ENTER>", $message );
+    $message = preg_replace( "/(\r)/", "<ENTER>", $message );
+
+    $phone_no = preg_replace( "/(\n)/", ",", $phone_no );
+    $phone_no = preg_replace( "/(\r)/", "", $phone_no );
+
+    $data = array("phone_no" => $phone_no, "key" => "", "message" => $message);
+    $data_string = json_encode($data);
+    $ch = curl_init('http://116.203.92.59/api/async_send_message');
+    curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_VERBOSE, 0);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+    'Content-Type: application/json',
+    'Content-Length: ' . strlen($data_string))
+    );
+    $result = curl_exec($ch);
+  }
   
 
   // --------------------------------------------------
@@ -208,65 +303,5 @@ class TransactionController extends Controller
   //     } else {
   //         return view('transaction/index2', $data, $cart)->with('cart', $cart);
   //     }
-
-    public function kirimWA(){
-      $phone_no = '6285741573739';
-      $phone_no1 = '6283857959431';
-      $phone_no2 = '6282227007422';
-      $phone_no3 = '62895393355523';
-      $phone_no4 = '6287882914957';
-      $message = "Bukti Transaksi dari *Kopi Kita*
-      
-      Nama    : Imam
-      No WA   : 085741573739
-      Invoice : 123456
-      Tanggal : Rabu, 12 April 2023
-      
-      Produk :
-      - Kopi hitam  2x  @Rp. 5.000
-      - Mendoan     1x  @Rp. 10.000
-      *SubTotal   : Rp. 20.000*
-      Pembayaran  : Rp. 50.000 (Kembali Ro, 30.000)
-      
-      Terima kasih atas kunjungan anda
-      
-      _Salam hangat_ *Kopi Kita*";
-
-      $this->kirimpesan($phone_no1, $message);
-      $this->kirimpesan($phone_no2, $message);
-      $this->kirimpesan($phone_no3, $message);
-      $this->kirimpesan($phone_no4, $message);
-
-      return view('dashboard');
-
-      // return redirect()->to('https://api.whatsapp.com/send/?phone='.$phone_no.'&text='.urlencode($message));
-    }
-
-    function kirimpesan( $phone_no, $message){
-		
-      //$message = "Bismillah";
-      //$phone_no = "085647878076";
-  
-      $message = preg_replace( "/(\n)/", "<ENTER>", $message );
-      $message = preg_replace( "/(\r)/", "<ENTER>", $message );
-  
-      $phone_no = preg_replace( "/(\n)/", ",", $phone_no );
-      $phone_no = preg_replace( "/(\r)/", "", $phone_no );
-  
-      $data = array("phone_no" => $phone_no, "key" => "121b303aa1fa94729a09faa729a5799e61f1d993b94a3b23", "message" => $message);
-      $data_string = json_encode($data);
-      $ch = curl_init('http://116.203.92.59/api/async_send_message');
-      curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
-      curl_setopt($ch, CURLOPT_POSTFIELDS, $data_string);
-      curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-      curl_setopt($ch, CURLOPT_VERBOSE, 0);
-      curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 0);
-      curl_setopt($ch, CURLOPT_TIMEOUT, 15);
-      curl_setopt($ch, CURLOPT_HTTPHEADER, array(
-      'Content-Type: application/json',
-      'Content-Length: ' . strlen($data_string))
-      );
-      $result = curl_exec($ch);
-    }
 
 }

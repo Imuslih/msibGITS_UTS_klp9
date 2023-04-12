@@ -17,8 +17,8 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-            $table->string('costumer_name');
-            $table->string('costumer_phone');
+            $table->string('customer_name');
+            $table->string('customer_phone');
             $table->string('invoice');
             $table->unsignedInteger('total_price')->default(0);
             $table->unsignedInteger('payment')->default(0);

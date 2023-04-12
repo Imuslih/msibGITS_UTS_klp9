@@ -70,6 +70,7 @@ Route::middleware(['auth'])->group(function () {
 
    Route::controller(ListTransactionController::class)->prefix('list_transaction')->group(function () {
       Route::get('', 'index')->name('list_transaction');
+      Route::get('list_detail/{id}', 'detail')->name('list_detail');
     });
 
 });

@@ -31,6 +31,21 @@ class ListTransactionController extends Controller
     return view('list_transaction.index',$data1);
   }
 
+  public function detail($id){
+    $data = array(
+      'menu' => 'list_transaction',
+      'sub_menu' => '',
+      'title' => 'Halaman Detail Transaksi',
+      'judul' => 'Detail Transaksi',
+      'sub_judul' => '',
+      );
+    $data2['details'] = $this->Transaksi->alldetailTransaksis($id);
+
+      // dd($data);
+
+    return view('list_transaction.list_detail', $data, $data2);
+  }
+
 
    
 
