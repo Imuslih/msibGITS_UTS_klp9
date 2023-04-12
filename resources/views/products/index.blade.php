@@ -38,7 +38,7 @@
             $no=1;
           @endphp
         @foreach ($data as $item)
-          <tr class="">
+          <tr class="{{ $item->stock  == 0 ? "bg bg-danger" : "" }} ">
             <td>{{$no++}}</td>
             <td>{{$item->product_code}}</td>
             <td>{{$item->name}}</td>
@@ -57,28 +57,6 @@
           </tr>
         @endforeach
 
-        @foreach ($data as $item)
-        <div class="modal fade" id="delete{{ $item->id  }}">
-          <div class="modal-dialog modal-danger">
-            <div class="modal-content bg-danger">
-              <div class="modal-header">
-                <h4 class="modal-title">Hapus Prduk</h4>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Apakah Anda Yakin ingin menghapus {{ $item->name }} ?
-              </div>
-              <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tidak</button>
-                <a href="{{ route('products.destroy',$item->id)}}" type="submit" class="btn btn-outline-light">Iya</a>
-              </div>
-            </div>
-            <!-- /.modal-content -->
-          </div>
-        </div>
-        @endforeach
         </tbody>
 
       </table>
@@ -86,4 +64,27 @@
     <!-- /.card-body -->
   </div>
 </div>
+
+@foreach ($data as $item)
+  <div class="modal fade" id="delete{{ $item->id  }}">
+    <div class="modal-dialog modal-danger">
+      <div class="modal-content bg-danger">
+        <div class="modal-header">
+          <h4 class="modal-title">Hapus Prduk</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          Apakah Anda Yakin ingin menghapus {{ $item->name }} ?
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-outline-light" data-dismiss="modal">Tidak</button>
+          <a href="{{ route('products.destroy',$item->id)}}" type="submit" class="btn btn-outline-light">Iya</a>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+  </div>
+@endforeach
 @endsection

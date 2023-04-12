@@ -63,7 +63,17 @@ class TransactionController extends Controller
 
   public function add_cart(Request $request){
 
-    $cart =  Cart::add([
+    $name = $request->input('name');
+    $qty = $request->input('qty');
+
+    $ambilDataProduk = $this->Transaksi->cek_produk($name);
+
+    $stokProduk = $ambilDataProduk->stock;
+
+    if ($qty>intval($stokProduk)) {
+        return redirect('transaction')->with('danger','Stok Tidak Mencukupi');
+    } else {
+      $cart =  Cart::add([
       'id' => $request->id_product,
       'name' => $request->name, 
       'price' => $request->selling_price, 
@@ -77,6 +87,10 @@ class TransactionController extends Controller
     ]);
 
      return redirect('transaction');
+    }
+    
+
+   
 
 
 
@@ -95,7 +109,7 @@ class TransactionController extends Controller
   }
 
   public function save_transaction(Request $request){
-    $produk = Cart::content();
+    $produk = Cart::subtotal();
     $invoice = $this->Transaksi->inVoice();
     $customer_name = $request->input('customer_name');
     $customer_phone = $request->input('customer_phone');
@@ -103,33 +117,42 @@ class TransactionController extends Controller
     $change =  str_replace(",","",$request->input('kembalian'));
     $user_id = $request->input('user_id');
     $transaksi_id = 1;
-    
-    
-      $data = [
-        'invoice' => $invoice,
-        'user_id' => $user_id,
-        'customer_name' => $customer_name,
-        'customer_phone' => $customer_phone,
-        'total_price' => Cart::subtotal(),
-        'payment' => $payment,
-        'change' => $change,
-      ];
-      Transaksi::create($data);
 
-      
-      foreach ($produk as $key => $value) {
-        $data = [
-          'transaksi_id' => $transaksi_id++,
-          'product_id' => $value->id,
-          'qty' =>  $value->qty,
-          'price' => $value->subtotal
-        ];
-        DetailTransaksi::create($data);
+    if ( $produk==0 ) {
+     return redirect('transaction')->with('danger','Data Keranjang Kosong');
+    } else {
+        if ($change<=0) {
+          return redirect('transaction')->with('danger','Data Tidak Benar');
+        } else {
+          $item = Cart::content();
+
+          $data = [
+            'invoice' => $invoice,
+            'user_id' => $user_id,
+            'customer_name' => $customer_name,
+            'customer_phone' => $customer_phone,
+            'total_price' => Cart::subtotal(),
+            'payment' => $payment,
+            'change' => $change,
+          ];
+          Transaksi::create($data);
+
+          
+          foreach ($item as $key => $value) {
+            $data = [
+              'transaksi_id' => $transaksi_id++,
+              'product_id' => $value->id,
+              'qty' =>  $value->qty,
+              'price' => $value->subtotal
+            ];
+            DetailTransaksi::create($data);
+          }
+
+
+          Cart::destroy();
+          return redirect('transaction')->with('success','Transaksi Berhasil Disimpan');
       }
-
-
-      Cart::destroy();
-      return redirect('transaction')->with('success','Transaksi Berhasil Disimpan');
+    }
   }
 
   

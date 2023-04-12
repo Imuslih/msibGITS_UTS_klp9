@@ -12,8 +12,13 @@
       <div class="col-lg-7">
         <div class="card card-primary card-outline">
           <div class="card-body">
-             <div class="swal" data-swal="{{ Session::get('success') }}">
-              </div>
+              @if (Session::get('danger'))
+                <div class="swal" data-swal="{{ Session::get('danger') }}">
+                </div>
+              @else
+                <div class="swal2" data-swal2="{{ Session::get('success') }}">
+                </div>
+              @endif
             <div class="row">
               <div class="col-3">
                 <div class="form-group">
@@ -370,14 +375,14 @@
 
     $('#name').focus();
 
+   
     @if($grand_total==0) {
       document.getElementById('terbilang').innerHTML ='Nol Rupiah';
     } @else {
       document.getElementById('terbilang').innerHTML = terbilang(<?= $grand_total ?>) + ' Rupiah';
     }
     @endif
-
-
+    
     $('#name').keydown(function (e) {
       let name = $('#name').val();
       if (e.keyCode == 13) {

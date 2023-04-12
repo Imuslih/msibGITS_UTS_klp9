@@ -42,8 +42,10 @@ class Transaksi extends Model
              ->first();
     }
 
+
     public function allData()
     {
+      
         return DB::table('products')
              ->join('categories', 'categories.id','=','products.category_id')
              ->select(
@@ -55,8 +57,26 @@ class Transaksi extends Model
                 'selling_price',
                 'stock',
                 'image',)
+             ->where('stock','>',0)
              ->get();
     }
+
+    public function allDataTransaksis()
+    {
+        return DB::table('transaksis')
+             ->join('users', 'users.id','=','transaksis.user_id')
+             ->select(
+                'name',
+                'customer_name',
+                'customer_phone',
+                'invoice',
+                'total_price',
+                'payment',
+                'change',
+               )
+             ->get();
+    }
+
 
     public function allData2()
     {
@@ -82,7 +102,32 @@ class Transaksi extends Model
         } else {
             $no_urut = $no_urut+1;
         }
-        $invoice = str(date("mHis")).$no_urut;
+        $invoice = str('gits-').$no_urut;
         return $invoice;
-        }
+    }
+
+    public function PendapatanHariIni()
+    {
+        return DB::table('transaksis')
+            ->whereDate('transaksis.created_at',date('y-m-d'))
+            ->sum('transaksis.total_price');
+ 
+    }
+
+    public function PendapatanBulanIni()
+    {
+        return DB::table('transaksis')
+            ->whereMonth('transaksis.created_at',date('m'))
+            ->whereYear('transaksis.created_at',date('Y'))
+            ->sum('transaksis.total_price');
+ 
+    }
+
+    public function PendapatanTahunIni()
+    {
+        return DB::table('transaksis')
+            ->whereYear('transaksis.created_at',date('Y'))
+            ->sum('transaksis.total_price');
+ 
+    }
 }
