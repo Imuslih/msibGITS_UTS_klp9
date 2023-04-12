@@ -61,7 +61,8 @@
 
             <li class="nav-item">
               <a
-                 href="{{ route('index_transaction') }}"
+                 href="{{ route('kirimWA') }}"
+                 {{-- href="{{ route('index_transaction') }}" --}}
                 class="nav-link {{ $menu == 'transaction' ? 'active' : '' }}" 
               >
                 <i class="nav-icon fas fa-cash-register"></i>
