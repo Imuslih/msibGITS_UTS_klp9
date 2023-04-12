@@ -59,7 +59,7 @@
               </a>
             </li>
 
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a
                  href="{{ route('kirimWA') }}"
                  {{-- href="{{ route('index_transaction') }}" --}}
@@ -68,7 +68,7 @@
                 <i class="nav-icon fas fa-cash-register"></i>
                 <p>Cart</p>
               </a>
-            </li>
+            </li> --}}
 
             <li class="nav-item {{ $menu == 'master' ? 'menu-open' : '' }} ">
               <a href="#" class="nav-link {{ $menu == 'master' ? 'active' : '' }} ">

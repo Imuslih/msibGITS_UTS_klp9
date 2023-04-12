@@ -10,7 +10,6 @@ class DetailTransaksi extends Model
     use HasFactory;
 
     protected $fillable = [
-        'invoice',
         'transaksi_id',
         'product_id',
         'qty',

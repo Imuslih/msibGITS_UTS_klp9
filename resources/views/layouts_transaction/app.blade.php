@@ -6,7 +6,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
     <meta name="csrf-token" content="{{ csrf_token() }}" />
 
-    {{-- <title>{{ $title }}</title> --}}
+    <title>{{ $title }}</title>
 
     <!-- Font Awesome Icons -->
     <link rel="stylesheet" href="{{ asset('/template/plugins/fontawesome-free/css/all.min.css') }}">
@@ -97,6 +97,26 @@
   });
 </script>
 
+<script>
+
+  const swal = $('.swal').data('swal');
+  const swal2 = $('.swal2').data('swal2');
+
+ if (swal) {
+    Swal.fire({
+      title: "MAAF !!",
+      text: swal,
+      icon: 'error'
+    })
+  }else if (swal2) {
+    Swal.fire({
+      title: "SELAMAT !!",
+      text: swal2,
+      icon: 'success'
+    })
+  }
+  
+</script>
 
 
 </body>
