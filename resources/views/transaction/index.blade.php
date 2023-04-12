@@ -430,9 +430,9 @@
     $('#kembalian').val(kembalian);
 
     new AutoNumeric('#kembalian', {
-    digitGroupSeparator : ',',
-    decimalPlaces: 0,
-  });
+      digitGroupSeparator : ',',
+      decimalPlaces: 0,
+    });
   }
 
 

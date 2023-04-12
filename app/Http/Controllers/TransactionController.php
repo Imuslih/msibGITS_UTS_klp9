@@ -121,7 +121,7 @@ class TransactionController extends Controller
     if ( $produk==0 ) {
      return redirect('transaction')->with('danger','Data Keranjang Kosong');
     } else {
-        if ($change<=0) {
+        if ($change<0) {
           return redirect('transaction')->with('danger','Data Tidak Benar');
         } else {
           $item = Cart::content();
