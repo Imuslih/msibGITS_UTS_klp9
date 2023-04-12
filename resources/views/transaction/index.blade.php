@@ -12,13 +12,15 @@
       <div class="col-lg-7">
         <div class="card card-primary card-outline">
           <div class="card-body">
+             <div class="swal" data-swal="{{ Session::get('success') }}">
+              </div>
             <div class="row">
               <div class="col-3">
                 <div class="form-group">
                   <label>No Faktur</label>
                   <label
                     class="form-control form-control-lg text-center text-danger"
-                    >gits-001</label
+                    >{{ $invoice }}</label
                   >
                 </div>
               </div>
@@ -293,56 +295,66 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
 
-        <div class="form-group">
-          <label>Nama Customer</label>
-            <div class="input-group mb-3">
-            <input  autocomplete="off" required id="customer_name" name="customer_name" class="form-control form-control-lg text-right"  placeholder="Nama Customer" required>
+      <form action="{{ route('transaction.save_transaction')}}" method="POST">
+        @csrf
+        <div class="modal-body">
+          <div class="form-group">
+            <label>Nama Customer</label>
+              <div class="input-group mb-3">
+              <input  autocomplete="off" required id="customer_name" name="customer_name" class="form-control form-control-lg text-right"  placeholder="Nama Customer" required>
+            </div>
           </div>
-        </div>
 
           <div class="form-group">
-          <label>No Telp Customer</label>
-            <div class="input-group mb-3">
-            <input  autocomplete="off" required id="customer_phone" name="customer_phone" class="form-control form-control-lg text-right"  placeholder="No Telp. Customer" required>
+            <label>No Telp Customer</label>
+              <div class="input-group mb-3">
+              <input  autocomplete="off" required id="customer_phone" name="customer_phone" class="form-control form-control-lg text-right"  placeholder="No Telp. Customer" required>
+            </div>
           </div>
-        </div>
-
-       <div class="form-group">
-          <label>Total Biaya</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"></i>Rp.</span>
-              </div>
-            <input id="grand_total" name="grand_total" value="{{ number_format($grand_total,0) }} " readonly  class="text-danger form-control form-control-lg text-right"  placeholder="Harga Beli" required>
-          </div>
-        </div>
 
         <div class="form-group">
-          <label>Dibayar</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"></i>Rp.</span>
-              </div>
-            <input required id="dibayar" name="dibayar" value=""  class="form-control form-control-lg text-right text-primary" autocomplete="off">
+            <label>Total Biaya</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"></i>Rp.</span>
+                </div>
+              <input id="grand_total" name="grand_total" value="{{ number_format($grand_total,0) }} " readonly  class="text-danger form-control form-control-lg text-right"  placeholder="Harga Beli" required>
+            </div>
           </div>
-        </div>
 
-        <div class="form-group">
-          <label>Kembalian</label>
-            <div class="input-group mb-3">
-              <div class="input-group-prepend">
-                <span class="input-group-text"></i>Rp.</span>
-              </div>
-            <input id="kembalian" name="kembalian" value=""  class="form-control form-control-lg text-right text-success" readonly>
+          <div class="form-group">
+            <label>Dibayar</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"></i>Rp.</span>
+                </div>
+              <input required id="dibayar" name="dibayar" value=""  class="form-control form-control-lg text-right text-primary" autocomplete="off">
+            </div>
+          </div>
+
+        
+          <input type="hidden" required id="user_id" name="user_id" value="{{ Auth::user()->id }}"  class="form-control form-control-lg text-right text-primary" readonly autocomplete="off">
+            
+
+          <div class="form-group">
+            <label>Kembalian</label>
+              <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"></i>Rp.</span>
+                </div>
+              <input id="kembalian" name="kembalian" value=""  class="form-control form-control-lg text-right text-success" readonly>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="modal-footer justify-content-between">
-        <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
-        <button type="submit" class="btn btn-primary btn-flat"><i class="fas fa-save"></i> Simpan Transaksi</button>
-      </div>
+     
+
+
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default btn-flat" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary btn-flat"><i class="fas fa-save"></i> Simpan Transaksi</button>
+        </div>
+      </form>
     </div>
     <!-- /.modal-content -->
   </div>

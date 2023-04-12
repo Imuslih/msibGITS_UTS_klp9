@@ -12,10 +12,12 @@ class Transaksi extends Model
 
     protected $fillable = [
         'user_id',
-        'costumer_name',
-        'costumer_phone',
+        'customer_name',
+        'customer_phone',
         'invoice',
-        'total_price'
+        'total_price',
+        'payment',
+        'change'
     ];
 
     public function detailTransaksi(){
@@ -63,18 +65,24 @@ class Transaksi extends Model
              ->get();
     }
 
-    // public function inVoice()
-    // {
-    //     $kode_transaksi = "gits-";
-    //     $query = \DB::table('transaksis')
-    //             ->select(\DB::raw('max(RIGHT(invoice,4)) as no_urut'));
-    //     // $hasil = $query['no_urut'];
-    //      if ($query[0]['no_urut']>0) {
-    //         $kd = $query['no_urut'] + 1;
-    //     }else {
-    //         $kd = 1;
-    //     }
-    //     $invoice = $kode_transaksi.$kd;
-    //     return $invoice;
-    //     }
+    public function inVoice()
+    {
+         $no_urut = 0;
+        $query = DB::table('transaksis')
+            ->select('id')
+            ->get();
+            
+        // $no = $query;
+       
+        foreach($query as $no){
+            $no_urut = $no->id;
+        }
+        if($no_urut == null){
+            $no_urut = 1;
+        } else {
+            $no_urut = $no_urut+1;
+        }
+        $invoice = str(date("mHis")).$no_urut;
+        return $invoice;
+        }
 }

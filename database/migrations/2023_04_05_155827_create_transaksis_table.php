@@ -21,6 +21,8 @@ return new class extends Migration
             $table->string('costumer_phone');
             $table->string('invoice');
             $table->unsignedInteger('total_price')->default(0);
+            $table->unsignedInteger('payment')->default(0);
+            $table->unsignedInteger('change')->default(0);
             $table->timestamps();
         });
     }

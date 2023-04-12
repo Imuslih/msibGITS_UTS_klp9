@@ -97,6 +97,18 @@
   });
 </script>
 
+<script>
+
+  const swal = $('.swal').data('swal');
+  if (swal) {
+    Swal.fire({
+      title: "SUKSES !!",
+      text: swal,
+      icon: 'success'
+    })
+  }
+  
+</script>
 
 
 </body>
