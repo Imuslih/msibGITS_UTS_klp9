@@ -421,6 +421,7 @@
     digitGroupSeparator : ',',
     decimalPlaces: 0,
   });
+  
 
   function HitungKembalian() {
     let grand_total =$('#grand_total').val().replace(/[^.\d]/g,'').toString();
@@ -429,10 +430,11 @@
     let kembalian = parseFloat(dibayar) - parseFloat(grand_total);
     $('#kembalian').val(kembalian);
 
+
     new AutoNumeric('#kembalian', {
-    digitGroupSeparator : ',',
-    decimalPlaces: 0,
-  });
+      digitGroupSeparator : ',',
+      decimalPlaces: 0,
+    });
   }
 
 

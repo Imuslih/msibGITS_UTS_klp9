@@ -22,6 +22,7 @@
                 <th>Total Harga</th>
                 <th>Uang Pembayaran</th>
                 <th>Uang Kembalian</th>
+                <th>&nbsp;</th>
             </tr>
         </thead>
         <tbody>
@@ -38,6 +39,7 @@
                     <td>Rp. {{number_format($item->total_price,0)}}</td>
                     <td>Rp. {{number_format($item->payment,0)}}</td>
                     <td>Rp. {{number_format($item->change,0)}}</td>
+                    <td><a href="{{ route('list_detail',$item->id)}}">Detail</a></td>
                 </tr>
                 @endforeach
         </tbody>
