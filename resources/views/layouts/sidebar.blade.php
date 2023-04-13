@@ -61,6 +61,7 @@
 
             {{-- <li class="nav-item">
               <a
+                 href="{{ route('kirimWA') }}"
                  href="{{ route('index_transaction') }}"
                 class="nav-link {{ $menu == 'transaction' ? 'active' : '' }}" 
               >

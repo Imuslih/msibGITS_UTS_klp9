@@ -44,6 +44,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('cart', 'cart');
     Route::get('add/{id}', 'add')->where('id','[0-9]+');
     Route::get('hapus/{id}', 'hapus')->where('id','[0-9]+');
+
+    Route::get('kirimWA', 'kirimWA')->name('kirimWA');
   });
   //cek
 
@@ -68,6 +70,8 @@ Route::middleware(['auth'])->group(function () {
 
    Route::controller(ListTransactionController::class)->prefix('list_transaction')->group(function () {
       Route::get('', 'index')->name('list_transaction');
+      Route::get('list_detail/{id}', 'detail')->name('list_detail');
+      Route::get('print_list_transaction/{id}', 'print_list_transaction')->name('print_list_transaction');
     });
 
 });
