@@ -1,7 +1,7 @@
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
       <!-- Brand Logo -->
-      <a href="index3.html" class="brand-link">
+      <a href="{{ route('dashboard') }}" class="brand-link">
         <img
           src="{{ asset('/template/dist/img/AdminLTELogo.png') }}"
           alt="AdminLTE Logo"
@@ -39,7 +39,7 @@
           >
             <!-- Add icons to the links using the .nav-icon class
                 with font-awesome or any other icon font library -->
-            <li class="nav-item">
+            {{-- <li class="nav-item">
               <a
                  href="{{ route('dashboard') }}"
                 class="nav-link {{ $menu == 'dashboard' ? 'active' : '' }}" 
@@ -47,17 +47,7 @@
                 <i class="nav-icon fas fa-tachometer-alt"></i>
                 <p>Dashboard</p>
               </a>
-            </li>
-
-            <li class="nav-item">
-              <a
-                 href="{{ route('transaction') }}"
-                class="nav-link {{ $menu == 'transaction' ? 'active' : '' }}" 
-              >
-                <i class="nav-icon fas fa-cash-register"></i>
-                <p>Penjualan</p>
-              </a>
-            </li>
+            </li> --}}
 
             {{-- <li class="nav-item">
               <a
@@ -103,6 +93,16 @@
                   </a>
                 </li>
               </ul>
+            </li>
+
+            <li class="nav-item">
+              <a
+                 href="{{ route('transaction') }}"
+                class="nav-link {{ $menu == 'transaction' ? 'active' : '' }}" 
+              >
+                <i class="nav-icon fas fa-cash-register"></i>
+                <p>Penjualan</p>
+              </a>
             </li>
 
              <li class="nav-item">
