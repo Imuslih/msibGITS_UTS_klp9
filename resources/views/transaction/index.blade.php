@@ -240,7 +240,7 @@
 
 <!-- Modal Pencarian Produk -->
 <div class="modal fade " id="find-product">
-  <div class="modal-dialog modal-lg">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
         <h4 class="modal-title">Pencarian Data Produk</h4>
@@ -276,7 +276,7 @@
               <td>Rp. {{ number_format($item->purchase_price,0)}}</td>
               <td>Rp. {{ number_format($item->selling_price,0)}}</td>
               <td>{{number_format($item->stock,0)}}</td>
-               <td> <img src="{{ asset('storage/'.$item->image) }}" style="width:100px" alt="image"> </td>
+               <td> <img src="{{ asset('img/'.$item->image) }}" style="width:100px" alt="image"> </td>
               <td style=" width:30px"><button onclick="PilihProduk('{{$item->name}}')" class="btn btn-success btn-xs">Piih</button></td>
             </tr>
             @endforeach

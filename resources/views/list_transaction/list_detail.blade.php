@@ -99,7 +99,7 @@
                 </div>
 
 
-            
+               </div>
             </div>
             <!-- /.invoice -->
           </div><!-- /.col -->
